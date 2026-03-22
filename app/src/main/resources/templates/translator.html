@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Translator</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 0 16px;
+      }
+
+      h1 {
+          margin-bottom: 24px;
+      }
+
+      form {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+      }
+
+      textarea {
+          width: 100%;
+          min-height: 180px;
+          padding: 12px;
+          font-size: 16px;
+          box-sizing: border-box;
+      }
+
+      .controls {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+      }
+
+      .field {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          min-width: 220px;
+      }
+
+      select {
+          padding: 10px 12px;
+          font-size: 16px;
+      }
+
+      .actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+      }
+
+      button, a {
+          display: inline-block;
+          padding: 10px 16px;
+          font-size: 16px;
+          text-decoration: none;
+          box-sizing: border-box;
+      }
+
+      .result {
+          margin-top: 24px;
+          padding: 16px;
+          background: #f4f4f4;
+          border-radius: 8px;
+      }
+
+      .result h2 {
+          margin-top: 0;
+      }
+
+      .error {
+          margin-top: 24px;
+          padding: 16px;
+          background: #ffe5e5;
+          border-radius: 8px;
+      }
+
+      .error h2 {
+          margin-top: 0;
+          color: #900;
+      }
+
+      .error p {
+          margin-bottom: 0;
+          color: #900;
+      }
+  </style>
+</head>
+<body>
+<h1>Переводчик</h1>
+
+<form th:action="@{/translator}" method="post">
+  <div class="field">
+    <label for="text">Текст для перевода</label>
+    <textarea id="text" name="text" th:text="${text}"></textarea>
+  </div>
+
+  <div class="controls">
+    <div class="field">
+      <label for="promptType">Выбор промпта</label>
+      <select id="promptType" name="promptType">
+        <option value="1" th:selected="${promptType == 1}">Промпт 1</option>
+        <option value="2" th:selected="${promptType == 2}">Промпт 2</option>
+        <option value="3" th:selected="${promptType == 3}">Промпт 3</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="level">Уровень</label>
+      <select id="level" name="level">
+        <option value="B1" th:selected="${level == 'B1'}">B1</option>
+        <option value="B2" th:selected="${level == 'B2'}">B2</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="submit">Перевести</button>
+    <a th:href="@{/translator/download}">Скачать файл</a>
+  </div>
+</form>
+
+<div class="result" th:if="${translation != null and !translation.isBlank()}">
+  <h2>Результат</h2>
+  <p th:text="${translation}"></p>
+</div>
+
+<div class="error" th:if="${error != null and !error.isBlank()}">
+  <h2>Ошибка</h2>
+  <p th:text="${error}"></p>
+</div>
+</body>
+</html>

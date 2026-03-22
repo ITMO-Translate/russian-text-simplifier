@@ -3,5 +3,5 @@ spring:
     name: code
 gemini:
   base-url: https://generativelanguage.googleapis.com
-  api-key: ${GEMINI_API_KEY:}
+  api-key: ${GEMINI_API_KEY}
   model: gemini-2.5-flash

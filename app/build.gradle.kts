@@ -27,6 +27,9 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok:1.18.44")
 	annotationProcessor("org.projectlombok:lombok:1.18.44")
+
+	implementation("org.apache.poi:poi-ooxml:5.4.1")
+	implementation("org.jfree:jfreechart:1.5.5")
 }
 
 tasks.withType<Test> {

@@ -12,7 +12,14 @@
       }
 
       h1 {
+          margin-bottom: 16px;
+      }
+
+      .status {
           margin-bottom: 24px;
+          padding: 12px 16px;
+          background: #eef4ff;
+          border-radius: 8px;
       }
 
       form {
@@ -51,6 +58,7 @@
           display: flex;
           gap: 12px;
           align-items: center;
+          flex-wrap: wrap;
       }
 
       button, a {
@@ -61,6 +69,11 @@
           box-sizing: border-box;
       }
 
+      .download-disabled {
+          opacity: 0.5;
+          pointer-events: none;
+      }
+
       .result {
           margin-top: 24px;
           padding: 16px;
@@ -68,7 +81,8 @@
           border-radius: 8px;
       }
 
-      .result h2 {
+      .result h2,
+      .error h2 {
           margin-top: 0;
       }
 
@@ -79,11 +93,6 @@
           border-radius: 8px;
       }
 
-      .error h2 {
-          margin-top: 0;
-          color: #900;
-      }
-
       .error p {
           margin-bottom: 0;
           color: #900;
@@ -92,6 +101,11 @@
 </head>
 <body>
 <h1>Переводчик</h1>
+
+<div class="status">
+  <strong>Накоплено переводов в текущей сессии:</strong>
+  <span th:text="${historyCount}">0</span>
+</div>
 
 <form th:action="@{/translator}" method="post">
   <div class="field">
@@ -120,7 +134,15 @@
 
   <div class="actions">
     <button type="submit">Перевести</button>
-    <a th:href="@{/translator/download}">Скачать файл</a>
+
+    <a th:if="${historyCount > 0}"
+       th:href="@{/translator/download}">
+      Скачать Excel
+    </a>
+
+    <span th:if="${historyCount == 0}" class="download-disabled">
+      Скачать Excel
+    </span>
   </div>
 </form>
 
